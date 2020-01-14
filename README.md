@@ -1,8 +1,29 @@
-## JettyServer
-这是一个 轻度封装，仅仅满足了基本需求的 Jetty 微服务器
+## JettyServer [![](https://jitpack.io/v/HyDevelop/JettyServer.svg)](https://jitpack.io/#HyDevelop/JettyServer)  
+这是一个 轻度封装，仅仅满足了基本需求的 [Jetty](https://www.eclipse.org/jetty/) 微服务器  
 
-### 使用方法
-1. 新建节点类，实现两个方法（参见 [ApiNode](https://github.com/HyDevelop/JettyServer/blob/master/src/main/java/api/ApiNode.java)）:  
+### 使用方法  
+1. 导入  
+
+添加 [JitPack](https://jitpack.io/) 仓库  
+`````xml
+	<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+`````
+
+添加本仓库  
+`````xml
+	<dependency>
+	    <groupId>com.github.HyDevelop</groupId>
+	    <artifactId>JettyServer</artifactId>
+	    <version>v1.0-SNAPSHOT</version>
+	</dependency>
+`````
+
+2. 新建节点类，实现两个方法（参见 [ApiNode](https://github.com/HyDevelop/JettyServer/blob/master/src/main/java/api/ApiNode.java)）:  
 
 `````Java
 import api.ApiAccess;
@@ -23,7 +44,7 @@ public class ExampleNode implements ApiNode {
 }
 `````
 
-2. 开启服务器
+3. 开启服务器  
 
 `````Java
 import api.ApiServer;
@@ -39,4 +60,4 @@ public class Main {
 }
 `````
 
-#### 开发组群号：498386389
+#### 开发组群号：498386389  
