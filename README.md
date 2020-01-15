@@ -1,4 +1,4 @@
-## JettyServer [![](https://jitpack.io/v/HyDevelop/JettyServer.svg)](https://jitpack.io/#HyDevelop/JettyServer)  
+## JettyApiServer [![](https://jitpack.io/v/HyDevelop/JettyServer.svg)](https://jitpack.io/#HyDevelop/JettyServer)  
 这是一个轻度封装, 仅仅满足了基本需求的 [Jetty](https://www.eclipse.org/jetty/) 微服务 API 服务器框架.<br>
 框架和依赖一共 ≈600kb, 而且可以不用装 Tomcat 那样的容器直接打包成 Jar 运行w!<br>
 
@@ -19,7 +19,7 @@
 `````xml
 <dependency>
     <groupId>com.github.HyDevelop</groupId>
-    <artifactId>JettyServer</artifactId>
+    <artifactId>JettyApiServer</artifactId>
     <version>v1.0-SNAPSHOT</version>
 </dependency>
 `````
