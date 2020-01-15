@@ -1,26 +1,27 @@
 ## JettyServer [![](https://jitpack.io/v/HyDevelop/JettyServer.svg)](https://jitpack.io/#HyDevelop/JettyServer)  
-这是一个 轻度封装，仅仅满足了基本需求的 [Jetty](https://www.eclipse.org/jetty/) 微服务器  
+这是一个轻度封装, 仅仅满足了基本需求的 [Jetty](https://www.eclipse.org/jetty/) 微服务 API 服务器框架.<br>
+框架和依赖一共 ≈600kb, 而且可以不用装 Tomcat 那样的容器直接打包成 Jar 运行w!<br>
 
 ### 使用方法  
 1. 导入  
 
 添加 [JitPack](https://jitpack.io/) 仓库  
 `````xml
-	<repositories>
-		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
-	</repositories>
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
 `````
 
 添加本仓库  
 `````xml
-	<dependency>
-	    <groupId>com.github.HyDevelop</groupId>
-	    <artifactId>JettyServer</artifactId>
-	    <version>v1.0-SNAPSHOT</version>
-	</dependency>
+<dependency>
+    <groupId>com.github.HyDevelop</groupId>
+    <artifactId>JettyServer</artifactId>
+    <version>v1.0-SNAPSHOT</version>
+</dependency>
 `````
 
 2. 新建节点类，实现两个方法（参见 [ApiNode](https://github.com/HyDevelop/JettyServer/blob/master/src/main/java/api/ApiNode.java)）:  
