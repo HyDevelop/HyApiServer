@@ -20,7 +20,7 @@
 <dependency>
     <groupId>com.github.HyDevelop</groupId>
     <artifactId>JettyApiServer</artifactId>
-    <version>v1.0-SNAPSHOT</version>
+    <version>1.1.0.8</version>
 </dependency>
 `````
 
