@@ -8,18 +8,31 @@ public class ApiServer {
     private final int port;
     private ApiHandler handler = new ApiHandler();
 
+    private Server jetty;
+
     /**
      * 开启服务器，端口即构造方法的参数
-     *
-     * @see RequiredArgsConstructor
      */
     public void start() {
-        Server server = new Server(port);
-        server.setHandler(handler);
+        startAsync();
+
+        // 同步线程
+        try {
+            jetty.join();
+        }
+        catch (InterruptedException e) {
+            System.err.println("Thread interrupted.");
+            e.printStackTrace();
+        }
+    }
+
+    public void startAsync()
+    {
+        jetty = new Server(port);
+        jetty.setHandler(handler);
 
         try {
-            server.start();
-            server.join();
+            jetty.start();
         } catch (Exception e) {
             throw new RuntimeException("Server start error", e);
         }
