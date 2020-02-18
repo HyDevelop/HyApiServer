@@ -28,6 +28,9 @@ public class ApiServer {
         }
     }
 
+    /**
+     * 异步启动
+     */
     public void startAsync()
     {
         jetty = new Server(port);
@@ -36,7 +39,19 @@ public class ApiServer {
         try {
             jetty.start();
         } catch (Exception e) {
-            throw new RuntimeException("Server start error", e);
+            throw new RuntimeException("Error occurred during server start", e);
+        }
+    }
+
+    /**
+     * 异步停止
+     */
+    public void stopAsync() {
+        try {
+            jetty.stop();
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Error occurred during server stop", e);
         }
     }
 
