@@ -1,5 +1,6 @@
 package api;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.jetty.server.Server;
 
@@ -8,6 +9,7 @@ public class ApiServer {
     private final int port;
     private ApiHandler handler = new ApiHandler();
 
+    @Getter
     private Server jetty;
 
     /**
