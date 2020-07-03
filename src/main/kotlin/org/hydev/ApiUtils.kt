@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse
 /**
  * Convert headers from
  */
-fun HttpServletRequest.mapHeaders(): Map<String, String>?
+fun HttpServletRequest.mapHeaders(): Map<String, String>
 {
     val headers: MutableMap<String, String> = HashMap()
     val keysEnumeration = headerNames
