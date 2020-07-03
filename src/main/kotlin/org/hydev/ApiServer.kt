@@ -21,6 +21,11 @@ class ApiServer(
     // Registered nodes
     val nodes = ApiNodeManager()
 
+    // Jetty handler
+    val jettyHandler = JettyHandler(this)
+
+    // Jetty server
+    val jetty = Server(port).apply { handler = jettyHandler }
 
     // Error handlers
     var handleNullRequest: () -> Unit = { err.println("Error: Somehow a Jetty parameter is null when handle is called") }
