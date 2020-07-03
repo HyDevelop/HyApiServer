@@ -55,7 +55,7 @@ class JettyHandler(private val server: ApiServer) : AbstractHandler()
         // Node not found
         if (node == null)
         {
-            server.handleEmptyPath(HttpAccess(target, baseRequest, request, response))
+            server.handleNodeNotFound(HttpAccess(target, baseRequest, request, response))
             return
         }
 
