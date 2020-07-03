@@ -18,3 +18,7 @@ open class HttpAccess(
     val request: HttpServletRequest,
     val response: HttpServletResponse
 )
+{
+    fun write(text: String) = response.write(text)
+    fun write(sc: Int, text: String) = response.apply { status = sc; write(text) }
+}
