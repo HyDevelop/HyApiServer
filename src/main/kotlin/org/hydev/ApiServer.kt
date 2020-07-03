@@ -43,4 +43,48 @@ class ApiServer(
         it.setHeader("Access-Control-Allow-Origin", "*")
         it.setHeader("Access-Control-Allow-Credentials", "true")
     }
+
+    /**
+     * Start the server asynchronously
+     */
+    fun start()
+    {
+        try
+        {
+            jetty.start()
+        }
+        catch (e: IOException)
+        {
+            throw RuntimeException("Error occurred when server is starting", e)
+        }
+    }
+
+    /**
+     * Stop the asynchronous server
+     */
+    fun stop()
+    {
+        try
+        {
+            jetty.stop()
+        }
+        catch (e: IOException)
+        {
+            throw RuntimeException("Error occurred when server is stopping", e)
+        }
+    }
+
+    /**
+     * Join thread
+     */
+    fun join() = jetty.join()
+
+    /**
+     * Start synchronously
+     */
+    fun startSync()
+    {
+        start()
+        join()
+    }
 }
