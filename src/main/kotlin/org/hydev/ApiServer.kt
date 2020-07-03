@@ -21,4 +21,7 @@ class ApiServer(
     // Registered nodes
     val nodes = ApiNodeManager()
 
+
+    // Accepted methods
+    var acceptedMethods = mutableListOf("get", "post")
 }
