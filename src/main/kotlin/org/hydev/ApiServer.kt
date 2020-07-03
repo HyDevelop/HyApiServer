@@ -30,4 +30,12 @@ class ApiServer(
 
     // Accepted methods
     var acceptedMethods = mutableListOf("get", "post")
+
+    // Configure default response
+    var configureResponse: (HttpServletResponse) -> Unit = {
+        it.status = SC_OK
+        it.contentType = "application/json; charset=utf-8"
+        it.setHeader("Access-Control-Allow-Origin", "*")
+        it.setHeader("Access-Control-Allow-Credentials", "true")
+    }
 }
