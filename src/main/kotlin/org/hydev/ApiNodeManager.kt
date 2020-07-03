@@ -23,6 +23,16 @@ class ApiNodeManager
     }
 
     /**
+     * Fancier way to register a node
+     *
+     * @param node
+     */
+    operator fun plusAssign(node: ApiNode)
+    {
+        register(node)
+    }
+
+    /**
      * Get api node
      *
      * @param path Path of the node
