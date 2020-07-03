@@ -13,5 +13,5 @@ abstract class ApiNode(path: String)
 {
     val path = path.toLowerCase()
 
-    abstract fun process(access: ApiAccess): Any
+    abstract fun process(access: ApiAccess): Any?
 }

@@ -65,7 +65,7 @@ class JettyHandler(private val server: ApiServer) : AbstractHandler()
         // Process api, and write response based on the result of api processing
         when (val result = node.process(ApiAccess(target, baseRequest, request, response, content)))
         {
-            is Unit -> return
+            null, is Unit -> response.write("")
             else -> response.write(result.toString())
         }
     }
