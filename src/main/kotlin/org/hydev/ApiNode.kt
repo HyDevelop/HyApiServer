@@ -9,7 +9,7 @@ package org.hydev
  * @author Vanilla (https://github.com/VergeDX)
  * @since 2020-07-03 12:34
  */
-abstract class ApiNode(path: String)
+abstract class ApiNode(path: String, val isSecret: Boolean = false)
 {
     val path = path.toLowerCase()
 
