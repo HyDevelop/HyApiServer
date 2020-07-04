@@ -22,4 +22,16 @@ class ApiAccess(
 ): HttpAccess(path, baseRequest, request, response)
 {
     val headers = request.mapHeaders()
+
+    /**
+     * This is called when an error occurs
+     *
+     * @return String
+     */
+    override fun toString(): String
+    {
+        return """Access: ${request.method} $path
+            |- With headers: $headers
+            |- With body: $body""".trimMargin()
+    }
 }
