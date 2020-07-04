@@ -35,7 +35,7 @@ abstract class JsonApiNode<T: Any>(
         if (access.body.isEmpty()) return jsonError("Request body is empty.")
         if (access.body.length > maxLength)
         {
-            throw KnownException(jsonError("Body too long. (${access.body.length}/$maxLength"))
+            throw KnownException(jsonError("Body too long. (${access.body.length}/$maxLength)"))
         }
 
         // Parse body as json
@@ -53,7 +53,7 @@ abstract class JsonApiNode<T: Any>(
 
         // Get and return processed results
         val result = json(access, data)
-        return if (result is String) result else parser.stringify(result)
+        return if (result.isPrimitive()) result else parser.stringify(result)
     }
 
     abstract fun json(access: ApiAccess, data: T): Any

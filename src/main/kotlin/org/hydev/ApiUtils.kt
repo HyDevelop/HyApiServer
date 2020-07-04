@@ -53,3 +53,11 @@ fun jsonError(text: String?) = json.stringify(JsonError.serializer(), JsonError(
 
 @Serializable
 private data class JsonError(val error: String?)
+
+/**
+ * Determine whether some object is a "primitive" type considered by Json.
+ *
+ * @return Primitive or not
+ */
+fun Any.isPrimitive() = this is String || this is Boolean || this is Int || this is Long
+    || this is Double || this is Float || this is Char || this is Byte || this is Short
