@@ -42,13 +42,6 @@ class JettyHandler(private val server: ApiServer) : AbstractHandler()
             return
         }
 
-        // Empty path
-        if (target.isEmpty())
-        {
-            server.handleEmptyPath(HttpAccess(target, baseRequest, request, response))
-            return
-        }
-
         // Get node
         val node: ApiNode? = server.nodes[target]
 

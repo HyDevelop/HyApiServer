@@ -30,7 +30,6 @@ class ApiServer(
     // Error handlers
     var handleNullRequest: () -> Unit = { err.println("Error: Somehow a Jetty parameter is null when handle is called") }
     var handleWrongMethod: (HttpAccess) -> Unit = { it.write(SC_BAD_REQUEST, "{\"error\": \"Error: invalid method\"}") }
-    var handleEmptyPath: (HttpAccess) -> Unit = { it.write(SC_BAD_REQUEST, "What?") }
     var handleNodeNotFound: (HttpAccess) -> Unit = { it.write(SC_NOT_FOUND, "Not found.") }
 
     // Accepted methods
