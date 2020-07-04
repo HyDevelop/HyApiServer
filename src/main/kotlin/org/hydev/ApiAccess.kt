@@ -13,12 +13,13 @@ import javax.servlet.http.HttpServletResponse
  * @since 2020-07-03 12:37
  */
 class ApiAccess(
-    target: String,
+    path: String,
     baseRequest: Request,
     request: HttpServletRequest,
     response: HttpServletResponse,
+    val node: ApiNode,
     val body: String
-): HttpAccess(target, baseRequest, request, response)
+): HttpAccess(path, baseRequest, request, response)
 {
     val headers = request.mapHeaders()
 }

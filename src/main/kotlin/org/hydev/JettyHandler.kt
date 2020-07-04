@@ -19,11 +19,10 @@ class JettyHandler(private val server: ApiServer) : AbstractHandler()
     /**
      * Handle requests and map them to either api nodes or error handlers.
      */
-    override fun handle(target: String?, baseRequest: Request?, request: HttpServletRequest?,
-                        response: HttpServletResponse?)
+    override fun handle(path: String?, baseRequest: Request?, request: HttpServletRequest?, response: HttpServletResponse?)
     {
         // Request is null (This shouldn't happen)
-        if (target == null || baseRequest == null || request == null || response == null)
+        if (path == null || baseRequest == null || request == null || response == null)
         {
             server.handleNullRequest()
             return
@@ -38,28 +37,35 @@ class JettyHandler(private val server: ApiServer) : AbstractHandler()
         // Limit request methods
         if (!server.acceptedMethods.contains(request.method.toLowerCase()))
         {
-            server.handleWrongMethod(HttpAccess(target, baseRequest, request, response))
+            server.handleWrongMethod(HttpAccess(path, baseRequest, request, response))
             return
         }
 
         // Get node
-        val node: ApiNode? = server.nodes[target]
+        val node: ApiNode? = server.nodes[path]
 
         // Node not found
         if (node == null)
         {
-            server.handleNodeNotFound(HttpAccess(target, baseRequest, request, response))
+            server.handleNodeNotFound(HttpAccess(path, baseRequest, request, response))
             return
         }
 
         // Get body
         val content = request.reader.lines().collect(Collectors.joining(System.lineSeparator()))
+        val access = ApiAccess(path, baseRequest, request, response, node, content)
 
-        // Process api, and write response based on the result of api processing
-        when (val result = node.process(ApiAccess(target, baseRequest, request, response, content)))
+        try
         {
-            null, is Unit -> response.write("")
-            else -> response.write(result.toString())
+            // Process api, and write response based on the result of api processing
+            when (val result = node.process(access))
+            {
+                null, is Unit -> response.write("")
+                else -> response.write(result.toString())
+            }
+        }
+        catch (e: Exception)
+        {
         }
     }
 }

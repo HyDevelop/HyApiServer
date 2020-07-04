@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse
  * @since 2020-07-03 16:14
  */
 open class HttpAccess(
-    val target: String,
+    val path: String,
     val baseRequest: Request,
     val request: HttpServletRequest,
     val response: HttpServletResponse
