@@ -17,6 +17,9 @@ class KotlinExampleJsonNode: JsonApiNode<KotlinExampleJsonNode.Model>("/json/div
      */
     @Serializable
     data class Model(val dividend: Double, val divisor: Double)
+    {
+        override fun toString() = json.stringify(serializer(), this)
+    }
 
     /**
      * Process json

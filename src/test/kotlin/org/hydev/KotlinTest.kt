@@ -4,9 +4,12 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request.Builder
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.hydev.KotlinExampleJsonNode.Model
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
+import java.io.IOException
+import kotlin.math.floor
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class KotlinTest
@@ -18,7 +21,12 @@ class KotlinTest
     @BeforeAll
     fun init()
     {
+        // Register with the .register() method
         server.nodes.register(KotlinExampleNode())
+
+        // Register with += operator
+        server.nodes += KotlinExampleJsonNode()
+
         server.start()
     }
 
@@ -41,7 +49,7 @@ class KotlinTest
     {
         val request = Builder().url("http://localhost:1029/c/").build()
         http.newCall(request).execute().use { response ->
-            assert(response.body!!.string() == "Not found.")
+            assert(response.body!!.string() == "{\"error\":\"Not found.\"}")
             assert(response.code == 404)
         }
     }
@@ -69,5 +77,71 @@ class KotlinTest
         val request = Builder().post(body).header("cute", "yes").url("http://localhost:1029/api/echo").build()
         http.newCall(request).execute()
             .use { assert(it.body!!.string() == "Thank you! (⺣◡⺣)\nI'm a cat") }
+    }
+
+
+    @Test
+    @Throws(IOException::class)
+    fun testJson()
+    {
+        val request = Builder()
+            .post(Model(23.0, 33.0).toString().toRequestBody("application/json".toMediaType()))
+            .url("http://localhost:1029/json/divide").build()
+        http.newCall(request).execute()
+            .use { assert(floor(it.body!!.string().toDouble() * 100) == 69.0) }
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun testJsonWithoutBody()
+    {
+        val request = Builder().url("http://localhost:1029/json/divide").build()
+        http.newCall(request).execute()
+            .use { assert(it.body!!.string() == "{\"error\":\"Request body is empty.\"}") }
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun testJsonWithIncorrectModel()
+    {
+        val request = Builder()
+            .post("{\"name\": \"Yukari Yakumo\", \"age\": \"At least 1200anghhkjlhjhgfsdfhjklfc\"}"
+                .toRequestBody("application/json".toMediaType()))
+            .url("http://localhost:1029/json/divide").build()
+        http.newCall(request).execute()
+            .use { assert(it.body!!.string().startsWith("{\"error\":\"Error during json parsing: ")) }
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun testJsonWithUnparseableModel()
+    {
+        val request = Builder()
+            .post("The quick brown fox jumps over the lazy dog.".toRequestBody("application/json".toMediaType()))
+            .url("http://localhost:1029/json/divide").build()
+        http.newCall(request).execute()
+            .use { assert(it.body!!.string().startsWith("{\"error\":\"Error during json parsing: ")) }
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun testJsonWithDataTooLong()
+    {
+        val request = Builder()
+            .post("The quick brown fox didn't jump over the lazy dog, but decided to slide under the lazy dog this time."
+                .toRequestBody("application/json".toMediaType()))
+            .url("http://localhost:1029/json/divide").build()
+        http.newCall(request).execute()
+            .use { assert(it.body!!.string() == "{\"error\":\"Body too long. (101/80)\"}") }
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun testJsonWithInternalError()
+    {
+        val request = Builder()
+            .post(Model(1337.0, 0.0).toString().toRequestBody("application/json".toMediaType()))
+            .url("http://localhost:1029/json/divide").build()
+        http.newCall(request).execute().use { assert(it.body!!.string() == "Infinity") }
     }
 }
