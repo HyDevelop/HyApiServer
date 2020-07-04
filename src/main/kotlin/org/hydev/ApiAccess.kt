@@ -30,8 +30,8 @@ class ApiAccess(
      */
     override fun toString(): String
     {
-        return """Access: ${request.method} $path
-            |- With headers: $headers
-            |- With body: $body""".trimMargin()
+        return "Access: ${request.method} $path\n" +
+            if (!node.isSecret) "- With headers: $headers\n- With body: $body"
+            else "- Details hidden because of node.isSecret."
     }
 }
