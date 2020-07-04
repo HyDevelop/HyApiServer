@@ -29,7 +29,7 @@ fun HttpServletResponse.write(text: String): Boolean
 {
     return try
     {
-        writer.println(text)
+        writer.print(text)
         true
     }
     catch (e: IOException)
