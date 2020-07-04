@@ -35,6 +35,7 @@ class ApiServer(
         err.println("============= ERROR =============\n${access}")
         e.printStackTrace()
         err.println("-------------- END --------------")
+        access.write("{\"error\": \"Error: ${e.message}\"}")
     }
 
     // Suppressed errors
