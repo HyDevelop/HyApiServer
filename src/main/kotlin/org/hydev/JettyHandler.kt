@@ -66,6 +66,9 @@ class JettyHandler(private val server: ApiServer) : AbstractHandler()
         }
         catch (e: Exception)
         {
+            // Handle general exception while processing
+            if (server.isSuppressed(e)) server.handleSuppressedError(e)
+            else server.handleError(access, e)
         }
     }
 }
