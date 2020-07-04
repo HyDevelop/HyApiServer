@@ -35,7 +35,7 @@ abstract class JsonApiNode<T: Any>(
         if (access.body.isEmpty()) return jsonError("Request body is empty.")
         if (access.body.length > maxLength)
         {
-            throw KnownException(jsonError("Body too long. (${access.body.length}/$maxLength)"))
+            throw KnownException("Body too long. (${access.body.length}/$maxLength)")
         }
 
         // Parse body as json
@@ -48,7 +48,7 @@ abstract class JsonApiNode<T: Any>(
         {
             var msg = "Error during json parsing: ${e.message}"
             if (!isSecret) msg += " for ${access.body}"
-            throw KnownException(jsonError(msg))
+            throw KnownException(msg)
         }
 
         // Get and return processed results

@@ -16,7 +16,7 @@ public class JavaExampleNode extends ApiNode
 {
     public JavaExampleNode()
     {
-        super("/api/echo");
+        super("/api/echo", false);
     }
 
     @Override
