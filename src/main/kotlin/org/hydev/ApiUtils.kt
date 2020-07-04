@@ -1,5 +1,8 @@
 package org.hydev
 
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import java.io.IOException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -39,9 +42,14 @@ fun HttpServletResponse.write(text: String): Boolean
     }
 }
 
+val json = Json(JsonConfiguration.Stable)
+
 /**
  * Convert text to error json format
  *
  * @param text Error message
  */
-fun jsonError(text: String?) = "{\"error\": \"${text}\"}"
+fun jsonError(text: String?) = json.stringify(JsonError.serializer(), JsonError(text))
+
+@Serializable
+private data class JsonError(val error: String?)
