@@ -32,11 +32,24 @@ abstract class JsonApiNode<T: Any>(
     override fun process(access: ApiAccess): Any
     {
         // Validate body
-        if (access.body.isEmpty()) throw KnownException(jsonError("Request body is empty."))
-        if (access.body.length > maxLength) throw KnownException(jsonError("Body too long."))
+        if (access.body.isEmpty()) return jsonError("Request body is empty.")
+        if (access.body.length > maxLength)
+        {
+            throw KnownException(jsonError("Body too long. (${access.body.length}/$maxLength"))
+        }
 
         // Parse body as json
-        val data = parser.parse(modelClass.serializer(), access.body)
+        val data: T
+        try
+        {
+            data = parser.parse(modelClass.serializer(), access.body)
+        }
+        catch (e: Exception)
+        {
+            var msg = "Error during json parsing: ${e.message}"
+            if (!isSecret) msg += " for ${access.body}"
+            throw KnownException(jsonError(msg))
+        }
 
         // Get and return processed results
         val result = json(access, data)
