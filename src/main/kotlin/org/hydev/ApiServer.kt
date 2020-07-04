@@ -30,7 +30,10 @@ class ApiServer(
     var handleNullRequest: () -> Unit = { err.println("Error: Somehow a Jetty parameter is null when handle is called") }
     var handleWrongMethod: (HttpAccess) -> Unit = { it.write(SC_BAD_REQUEST, jsonError("Invalid method.")) }
     var handleNodeNotFound: (HttpAccess) -> Unit = { it.write(SC_NOT_FOUND, jsonError("Not found.")) }
-    var handleSuppressedError: (Exception) -> Unit = { println("Ignored error: ${it.message}") }
+    var handleSuppressedError: (ApiAccess, Exception) -> Unit = { access: ApiAccess, e: Exception ->
+        println("Ignored error: ${e.message}")
+        access.write(jsonError(e.message))
+    }
     var handleError: (ApiAccess, Exception) -> Unit = { access: ApiAccess, e: Exception ->
         err.println("============= ERROR =============\n${access}")
         e.printStackTrace()
