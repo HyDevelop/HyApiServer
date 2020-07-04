@@ -38,3 +38,10 @@ fun HttpServletResponse.write(text: String): Boolean
         false
     }
 }
+
+/**
+ * Convert text to error json format
+ *
+ * @param text Error message
+ */
+fun jsonError(text: String?) = "{\"error\": \"${text}\"}"
