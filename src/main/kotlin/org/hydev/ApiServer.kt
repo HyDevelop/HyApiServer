@@ -1,7 +1,6 @@
 package org.hydev
 
 import org.eclipse.jetty.server.Server
-import java.io.IOException
 import java.lang.System.err
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.*
@@ -43,47 +42,8 @@ class ApiServer(
         it.setHeader("Access-Control-Allow-Credentials", "true")
     }
 
-    /**
-     * Start the server asynchronously
-     */
-    fun start()
-    {
-        try
-        {
-            jetty.start()
-        }
-        catch (e: IOException)
-        {
-            throw RuntimeException("Error occurred when server is starting", e)
-        }
-    }
-
-    /**
-     * Stop the asynchronous server
-     */
-    fun stop()
-    {
-        try
-        {
-            jetty.stop()
-        }
-        catch (e: IOException)
-        {
-            throw RuntimeException("Error occurred when server is stopping", e)
-        }
-    }
-
-    /**
-     * Join thread
-     */
+    fun start() = jetty.start()
+    fun stop() = jetty.stop()
     fun join() = jetty.join()
-
-    /**
-     * Start synchronously
-     */
-    fun startSync()
-    {
-        start()
-        join()
-    }
+    fun startSync() = apply { start(); join() }
 }
