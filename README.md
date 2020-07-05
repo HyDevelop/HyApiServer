@@ -1,4 +1,4 @@
-# JettyApiServer [![](https://jitpack.io/v/HyDevelop/JettyServer.svg)](https://jitpack.io/#HyDevelop/JettyServer)  
+# HyApiServer
 This is a lightweight Kotlin (Java) library for creating http servers with API nodes (or paths), 
 designed for small scale microservices.
 It is implemented with [Jetty](https://www.eclipse.org/jetty/), 
