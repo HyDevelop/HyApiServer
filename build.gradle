@@ -2,9 +2,14 @@ plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.3.72'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.3.70'
+
+    // Publishing
+    id "maven"
+    id "signing"
 }
 
 group 'org.hydev'
+archivesBaseName = "HyApiServer"
 version '2.0.0.15'
 
 repositories {
@@ -31,4 +36,78 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+// ########## //
+// Publishing //
+// ########## //
+
+task sourceJar(type: Jar) {
+    classifier "sources"
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier "javadoc"
+    from javadoc
+}
+
+artifacts {
+    archives jar
+    archives sourceJar
+    archives javadocJar
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUser, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUser, password: ossrhPassword)
+            }
+
+            pom.project {
+                name = 'HyApiServer'
+                description = 'Simplistic Kotlin JSON API Server without containers!'
+                url = "https://github.com/HyDevelop/JettyApiServer"
+                packaging = 'jar'
+
+                licenses {
+                    license {
+                        name = "MIT"
+                        url = "https://github.com/HyDevelop/JettyApiServer/blob/master/LICENSE"
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = "hykilpikonna"
+                        name = "Hykilpikonna"
+                        email = "admin@moecraft.cc"
+                    }
+                    developer {
+                        id = "vergedx"
+                        name = "Vanilla"
+                        email = "wxy20001225@126.com"
+                    }
+                }
+
+                scm {
+                    connection = "scm:svn:https://github.com/HyDevelop/JettyApiServer.git"
+                    developerConnection = "scm:svn:https://github.com/HyDevelop/JettyApiServer.git"
+                    url = "https://github.com/HyDevelop/JettyApiServer"
+                }
+            }
+        }
+    }
+}
+
+signing {
+    useGpgCmd()
+    sign configurations.archives
 }
