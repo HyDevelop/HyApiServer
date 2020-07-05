@@ -246,3 +246,35 @@ public class JavaExampleJsonNode extends JsonApiNodeJava<JavaExampleJsonNode.Mod
     }
 }
 ```
+
+### 5. More Advanced Setup (Optional):
+
+If you want to customize the setup, you can modify the fields in your `server` object in your Main function.
+
+What you can change:
+
+* How are different errors handled.
+* What errors are suppressed. (Default only KnownException)
+* What are the accepted methods. (Default "get" and "post")
+* How is the default response configured.
+
+For example, if you want to disable the "Ignored error" output:
+
+```kotlin
+// Copy the code from ApiServer.kt, and delete the println line.
+server.handleSuppressedError = { access: ApiAccess, e: Exception -> access.write(jsonError(e.message))}
+```
+
+For example #2, if you want to turn on CORS limitations:
+
+```kotlin
+// This is the function that the server calls when configuring default responses.
+server.configureResponse = {
+    it.status = SC_OK
+    it.contentType = "application/json; charset=utf-8"
+    it.setHeader("Access-Control-Allow-Origin", "*") // Change this to something you want.
+    it.setHeader("Access-Control-Allow-Credentials", "true")
+}
+```
+
+If you want to do anything else, just read the code!
