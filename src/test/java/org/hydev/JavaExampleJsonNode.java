@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class JavaExampleJsonNode extends JsonApiNodeJava<JavaExampleJsonNode.Model>
 {
     /*
-     * Create parser (You only have to do this once for every json api node.
+     * Create parser (You only have to do this only once.
      * I recommend putting this into the main function, but I put it here for
      * the clarity of this demonstration.)
      */
@@ -57,8 +57,12 @@ public class JavaExampleJsonNode extends JsonApiNodeJava<JavaExampleJsonNode.Mod
     }
 
     /**
-     * Process json. In this case, this api does a simple division of the
-     * two numbers given.
+     * Process json data which is already automatically parsed.
+     * In this case, this api does a simple division of the two numbers given.
+     *
+     * Note: If you return an object of a class, it would be automatically
+     * stringified as an Json object, but if you return a String or a primitive,
+     * it would be returned directly.
      */
     @Override
     public Object json(@NotNull ApiAccess access, Model data)

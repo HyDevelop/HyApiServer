@@ -22,7 +22,12 @@ class KotlinExampleJsonNode: JsonApiNode<KotlinExampleJsonNode.Model>("/json/div
     }
 
     /**
-     * Process json
+     * Process json data which is already automatically parsed.
+     * In this case, this api does a simple division of the two numbers given.
+     *
+     * Note: If you return an object of a class, it would be automatically
+     * stringified as an Json object, but if you return a String or a primitive,
+     * it would be returned directly.
      */
     override fun json(access: ApiAccess, data: Model) = data.dividend / data.divisor
 }
