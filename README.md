@@ -9,9 +9,9 @@ However, I do recommend using Nginx on top of it if you want to run multiple ser
 
 ## How to use
 
-### 1. Import
+### 1. Import with Maven / Gradle
 
-TODO!
+https://mvnrepository.com/artifact/org.hydev/HyApiServer
 
 ### 2. Create an API server
 
