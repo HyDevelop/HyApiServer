@@ -10,14 +10,12 @@ import kotlinx.serialization.Serializable
  * @author Vanilla (https://github.com/VergeDX)
  * @since 2020-07-04 11:16
  */
-class KotlinExampleJsonNode: JsonApiNode<KotlinExampleJsonNode.Model>("/json/divide", Model::class, maxLength = 80)
-{
+class KotlinExampleJsonNode : JsonApiNode<KotlinExampleJsonNode.Model>("/json/divide", Model::class, maxLength = 80) {
     /**
      * Model of the data passed in through request body.
      */
     @Serializable
-    data class Model(val dividend: Double, val divisor: Double)
-    {
+    data class Model(val dividend: Double, val divisor: Double) {
         override fun toString() = json.stringify(serializer(), this)
     }
 

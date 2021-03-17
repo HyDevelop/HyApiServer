@@ -13,21 +13,18 @@ abstract class JsonApiNodeJava<T>(
     val modelClass: Class<T>,
     isSecret: Boolean,
     val maxLength: Int
-) : ApiNode(path)
-{
+) : ApiNode(path) {
     /**
      * This is the parser interface to support other java json parsing
      * libraries. (Since this project is focused mainly on Kotlin, I'm
      * not going to add GSON as a default dependency.)
      */
-    interface JavaJsonParser
-    {
+    interface JavaJsonParser {
         fun <T> parse(type: Class<T>, json: String): T
         fun <T> stringify(type: Class<T>, data: Any): String
     }
 
-    companion object
-    {
+    companion object {
         @JvmStatic
         lateinit var parser: JavaJsonParser
     }
@@ -38,23 +35,18 @@ abstract class JsonApiNodeJava<T>(
      * @param access Http node access
      * @return Data sent back to the user
      */
-    override fun process(access: ApiAccess): Any?
-    {
+    override fun process(access: ApiAccess): Any? {
         // Validate body
         if (access.body.isEmpty()) return jsonError("Request body is empty.")
-        if (access.body.length > maxLength)
-        {
+        if (access.body.length > maxLength) {
             throw KnownException("Body too long. (${access.body.length}/$maxLength)")
         }
 
         // Parse body as json
         val data: T
-        try
-        {
+        try {
             data = parser.parse(modelClass, access.body)
-        }
-        catch (e: Exception)
-        {
+        } catch (e: Exception) {
             var msg = "Error during json parsing: ${e.message}"
             if (!isSecret) msg += " for ${access.body}"
             throw KnownException(msg)

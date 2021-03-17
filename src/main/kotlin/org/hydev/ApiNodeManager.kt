@@ -8,8 +8,7 @@ package org.hydev
  * @author Vanilla (https://github.com/VergeDX)
  * @since 2020-07-03 12:34
  */
-class ApiNodeManager
-{
+class ApiNodeManager {
     private val nodes = ArrayList<ApiNode>()
 
     /**
@@ -17,8 +16,7 @@ class ApiNodeManager
      *
      * @param nodes API Nodes that you want to register.
      */
-    fun register(vararg nodes: ApiNode)
-    {
+    fun register(vararg nodes: ApiNode) {
         this.nodes.addAll(nodes)
     }
 
@@ -27,8 +25,7 @@ class ApiNodeManager
      *
      * @param node
      */
-    operator fun plusAssign(node: ApiNode)
-    {
+    operator fun plusAssign(node: ApiNode) {
         register(node)
     }
 
@@ -38,14 +35,11 @@ class ApiNodeManager
      * @param path Path of the node
      * @return Api node or null
      */
-    operator fun get(path: String): ApiNode?
-    {
+    operator fun get(path: String): ApiNode? {
         val lowerPath = path.toLowerCase()
 
-        for (node in nodes)
-        {
-            if (node.path == lowerPath)
-            {
+        for (node in nodes) {
+            if (node.path == lowerPath) {
                 return node
             }
         }

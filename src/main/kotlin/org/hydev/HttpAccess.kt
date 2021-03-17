@@ -1,8 +1,8 @@
 package org.hydev
 
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.eclipse.jetty.server.Request
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 /**
  * HTTP Access before api information is obtained
@@ -17,8 +17,7 @@ open class HttpAccess(
     val baseRequest: Request,
     val request: HttpServletRequest,
     val response: HttpServletResponse
-)
-{
+) {
     fun write(text: String) = response.write(text)
     fun write(sc: Int, text: String) = response.apply { status = sc }.write(text)
 }

@@ -1,9 +1,10 @@
 package org.hydev
 
+import jakarta.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletResponse.*
 import org.eclipse.jetty.server.Server
 import java.lang.System.err
-import javax.servlet.http.HttpServletResponse
-import javax.servlet.http.HttpServletResponse.*
+
 
 /**
  * TODO: Write a description for this class!
@@ -15,8 +16,7 @@ import javax.servlet.http.HttpServletResponse.*
  */
 class ApiServer(
     val port: Int
-)
-{
+) {
     // Registered nodes
     val nodes = ApiNodeManager()
 
@@ -27,7 +27,8 @@ class ApiServer(
     val jetty = Server(port).apply { handler = jettyHandler }
 
     // Error handlers
-    var handleNullRequest: () -> Unit = { err.println("Error: Somehow a Jetty parameter is null when handle is called") }
+    var handleNullRequest: () -> Unit =
+        { err.println("Error: Somehow a Jetty parameter is null when handle is called") }
     var handleWrongMethod: (HttpAccess) -> Unit = { it.write(SC_BAD_REQUEST, jsonError("Invalid method.")) }
     var handleNodeNotFound: (HttpAccess) -> Unit = { it.write(SC_NOT_FOUND, jsonError("Not found.")) }
     var handleSuppressedError: (ApiAccess, Exception) -> Unit = { access: ApiAccess, e: Exception ->
@@ -53,6 +54,7 @@ class ApiServer(
         it.contentType = "application/json; charset=utf-8"
         it.setHeader("Access-Control-Allow-Origin", "*")
         it.setHeader("Access-Control-Allow-Credentials", "true")
+        it.setHeader("Server", "HyApiServer/2.1")
     }
 
     fun start() = jetty.start()

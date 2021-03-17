@@ -15,13 +15,13 @@ import kotlin.reflect.KClass
  * @author Vanilla (https://github.com/VergeDX)
  * @since 2020-06-21 15:19
  */
-abstract class JsonApiNode<T: Any>(
+abstract class JsonApiNode<T : Any>(
     path: String,
     val modelClass: KClass<T>,
     isSecret: Boolean = false,
     val maxLength: Int = 10000,
-    val parser: Json = Json(JsonConfiguration.Stable)): ApiNode(path, isSecret)
-{
+    val parser: Json = Json(JsonConfiguration.Stable)
+) : ApiNode(path, isSecret) {
     /**
      * Process http node access to check for stuff and parse json.
      *
@@ -29,23 +29,18 @@ abstract class JsonApiNode<T: Any>(
      * @return Data sent back to the user
      */
     @ImplicitReflectionSerializer
-    override fun process(access: ApiAccess): Any
-    {
+    override fun process(access: ApiAccess): Any {
         // Validate body
         if (access.body.isEmpty()) return jsonError("Request body is empty.")
-        if (access.body.length > maxLength)
-        {
+        if (access.body.length > maxLength) {
             throw KnownException("Body too long. (${access.body.length}/$maxLength)")
         }
 
         // Parse body as json
         val data: T
-        try
-        {
+        try {
             data = parser.parse(modelClass.serializer(), access.body)
-        }
-        catch (e: Exception)
-        {
+        } catch (e: Exception) {
             var msg = "Error during json parsing: ${e.message}"
             if (!isSecret) msg += " for ${access.body}"
             throw KnownException(msg)
