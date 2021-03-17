@@ -1,21 +1,20 @@
 package org.hydev
 
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import java.io.IOException
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+
 
 /**
  * Convert headers from
  */
-fun HttpServletRequest.mapHeaders(): Map<String, String>
-{
+fun HttpServletRequest.mapHeaders(): Map<String, String> {
     val headers: MutableMap<String, String> = HashMap()
     val keysEnumeration = headerNames
-    while (keysEnumeration.hasMoreElements())
-    {
+    while (keysEnumeration.hasMoreElements()) {
         val key = keysEnumeration.nextElement()
         headers[key] = getHeader(key)
     }
@@ -28,15 +27,11 @@ fun HttpServletRequest.mapHeaders(): Map<String, String>
  * @param text Response text
  * @return Success or not
  */
-fun HttpServletResponse.write(text: String): Boolean
-{
-    return try
-    {
+fun HttpServletResponse.write(text: String): Boolean {
+    return try {
         writer.print(text)
         true
-    }
-    catch (e: IOException)
-    {
+    } catch (e: IOException) {
         e.printStackTrace()
         false
     }
@@ -60,4 +55,4 @@ private data class JsonError(val error: String?)
  * @return Primitive or not
  */
 fun Any.isPrimitive() = this is String || this is Boolean || this is Int || this is Long
-    || this is Double || this is Float || this is Char || this is Byte || this is Short
+        || this is Double || this is Float || this is Char || this is Byte || this is Short
