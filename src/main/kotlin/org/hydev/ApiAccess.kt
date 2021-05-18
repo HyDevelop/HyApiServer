@@ -1,8 +1,8 @@
 package org.hydev
 
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.eclipse.jetty.server.Request
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 /**
  * An ApiAccess instance contains the data that the client sent to the server.
@@ -19,8 +19,7 @@ class ApiAccess(
     response: HttpServletResponse,
     val node: ApiNode,
     val body: String
-): HttpAccess(path, baseRequest, request, response)
-{
+) : HttpAccess(path, baseRequest, request, response) {
     val headers = request.mapHeaders()
 
     /**
@@ -28,10 +27,9 @@ class ApiAccess(
      *
      * @return String
      */
-    override fun toString(): String
-    {
+    override fun toString(): String {
         return "Access: ${request.method} $path\n" +
-            if (!node.isSecret) "- With headers: $headers\n- With body: $body"
-            else "- Details hidden because of node.isSecret."
+                if (!node.isSecret) "- With headers: $headers\n- With body: $body"
+                else "- Details hidden because of node.isSecret."
     }
 }
